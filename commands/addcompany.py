@@ -11,6 +11,10 @@ from telegram.constants import PARSEMODE_HTML, PARSEMODE_MARKDOWN_V2
 def add_company(update, context):
     company_name = ' '.join(context.args)
 
+    if len(company_name) == 0: 
+        context.bot.send_message(chat_id=update.effective_chat.id, text='Incluye junto al comando el nombre de la compañía que deseas añadir la lista')
+    return
+
     # Conexion a la DB
     dir_path = os.path.dirname(os.path.abspath(__file__))
     conn = sqlite3.connect(os.path.join(dir_path, 'simcobot.db'))
