@@ -10,19 +10,23 @@ def ranking(update, context):
     conn = sqlite3.connect(os.path.join(dir_path, 'simcobot.db'))
     cur = conn.cursor()
     try:
-        cur.execute('''SELECT name, value FROM companies ORDER BY value DESC''')
+        cur.execute('''SELECT name, value, growth FROM companies ORDER BY value DESC''')
         datos = cur.fetchall()
+
         msg = '🏆 <b>RANKING POR VALOR DE COMPAÑÍA</b> 🏆\n\n'
+        msg += '<i>Para aparecer en el ranking usa el comando <pre>/agregar</pre> y el nombre de tu compañía tal como aprece en el juego.</i>\n\n'
+
         for i, company in enumerate(datos):
             if i == 0:
-                msg += '🥇 <b>{}</b>\n&#x200B &#x200B &#x200B &#x200B &#x200B <pre>$ {:,.2f}</pre>\n'.format(company[0], company[1])
+                rank = '🥇'
             elif i == 1:
-                msg += '🥈 <b>{}</b>\n&#x200B &#x200B &#x200B &#x200B &#x200B <pre>$ {:,.2f}</pre>\n'.format(company[0], company[1])
+                rank = '🥈'
             elif i == 2:
-                msg += '🥉 <b>{}</b>\n&#x200B &#x200B &#x200B &#x200B &#x200B <pre>$ {:,.2f}</pre>\n'.format(company[0], company[1])
+                rank = '🥉'
             else:
-                msg += '<b>{}. {}</b>\n&#x200B &#x200B &#x200B &#x200B &#x200B <pre>$ {:,.2f}</pre>\n'.format(i + 1, company[0], company[1])
-                
+                rank = str(i + 1) + '.'
+            msg += '<b>{} {}</b>\n<pre>   $ {:,.2f} ({:.2%})</pre>\n'.format(rank, company[0], company[1], company[2] / 100)
+             
         msg += '\n<i>Para aparecer en el ranking usa el comando <pre>/agregar</pre> y el nombre de tu compañía tal como aprece en el juego.</i>'
 
     except:
