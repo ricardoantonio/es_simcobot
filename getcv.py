@@ -28,7 +28,7 @@ for player in players:
         datos = uh.read().decode()
     except urllib.error.HTTPError as err:
         if err.code == 404:
-            datos = None  
+            datos = None
 
     try:
         js = json.loads(datos)
@@ -37,16 +37,18 @@ for player in players:
 
     if js:
 
-        cur.execute('''SELECT value FROM companies WHERE idCompany = ?''', (js['player']['id'],))
+        cur.execute(
+            '''SELECT value FROM companies WHERE idCompany = ?''', (js['player']['id'],))
         last_value = cur.fetchone()[0]
 
         if last_value != 0:
-            growth = round(((js['player']['history']['value'] * 100) / last_value) - 100, 2)
+            growth = round(
+                ((js['player']['history']['value'] * 100) / last_value) - 100, 2)
         else:
             growth = 100
 
-        cur.execute('''UPDATE companies SET name = ?, value = ?, growth = ? WHERE idCompany = ?''',(js['player']['company'], js['player']['history']['value'], growth ,js['player']['id']))
+        cur.execute('''UPDATE companies SET name = ?, value = ?, growth = ? WHERE idCompany = ?''',
+                    (js['player']['company'], js['player']['history']['value'], growth, js['player']['id']))
         conn.commit()
 
 conn.close()
-

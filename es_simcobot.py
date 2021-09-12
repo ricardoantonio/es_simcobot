@@ -6,11 +6,15 @@ from commands.addcompany import add_company
 from commands.delcompany import del_company
 from commands.ranking import ranking
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
-# 1. DEFINIR COMANDOS 
+# 1. DEFINIR COMANDOS (Se han difinido en la carpeta commands)
+
+
 def ping(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text='Pong!')
+
 
 def main():
     BOT_TOKEN = config('TOKEN')
@@ -31,11 +35,12 @@ def main():
 
     # Start the bot
     updater.start_polling()
-    
+
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
     # start_polling() is non-blocking and will stop the bot gracefully.
     updater.idle()
+
 
 if __name__ == '__main__':
     main()
