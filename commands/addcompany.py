@@ -19,7 +19,7 @@ def add_company(update, context):
     dir_path = os.path.dirname(os.path.abspath(__file__))
     conn = sqlite3.connect(os.path.join(dir_path, 'simcobot.db'))
     cur = conn.cursor()
-    cur.execute('''CREATE TABLE IF NOT EXISTS companies (idCompany integer primary key, name text, logo text, value integer)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS companies (idCompany integer primary key, name text, logo text, value integer, growth float default 0)''')
 
     # Conexion a la API
     service_url = 'https://www.simcompanies.com/api/v2/players-by-company/'

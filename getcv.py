@@ -36,7 +36,16 @@ for player in players:
         js = None
 
     if js:
-        cur.execute('''UPDATE companies SET name = ?, value = ? WHERE idCompany = ?''',(js['player']['company'], js['player']['history']['value'], js['player']['id']))
+
+        cur.execute('''SELECT value FROM companies WHERE idCompany = ?''', (js['player']['id'],))
+        last_value = cur.fetchone()[0]
+
+        if last_value != 0:
+            growth = round(((js['player']['history']['value'] * 100) / last_value) - 100, 2)
+        else:
+            growth = 100
+
+        cur.execute('''UPDATE companies SET name = ?, value = ?, growth = ? WHERE idCompany = ?''',(js['player']['company'], js['player']['history']['value'], growth ,js['player']['id']))
         conn.commit()
 
 conn.close()
