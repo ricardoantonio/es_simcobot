@@ -15,6 +15,13 @@ def del_company(update, context):
     dir_path = os.path.dirname(os.path.abspath(__file__))
     conn = sqlite3.connect(os.path.join(dir_path, 'simcobot.db'))
     cur = conn.cursor()
+    cur.execute('''SELECT name FROM companies WHERE name = ?''', (company_name, ))
+    company = cur.fetchone()
+
+    if not company: 
+        msg = 'No se encontró a <b>{}</b> en la lista. ¿Seguro que escribiste bien el nombre de la empresa?'.format(company_name)
+        context.bot.send_message(chat_id=update.effective_chat.id, text=msg, parse_mode=PARSEMODE_HTML, reply_to_message_id=update.message.message_id)
+        return
 
     try:
         cur.execute('''DELETE FROM companies WHERE name = ?''', (company_name, ))
