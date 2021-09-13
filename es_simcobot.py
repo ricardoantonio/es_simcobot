@@ -5,6 +5,7 @@ from decouple import config
 from commands.addcompany import add_company
 from commands.delcompany import del_company
 from commands.ranking import ranking
+from commands.help import help
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -26,12 +27,14 @@ def main():
     add_company_handler = CommandHandler('agregar', add_company)
     del_company_handler = CommandHandler('eliminar', del_company)
     ranking_handler = CommandHandler('ranking', ranking)
+    help_handler = CommandHandler('help', help)
 
     # 3. REGISTRAR MANEJADORES
     dispatcher.add_handler(ping_handler)
     dispatcher.add_handler(add_company_handler)
     dispatcher.add_handler(del_company_handler)
     dispatcher.add_handler(ranking_handler)
+    dispatcher.add_handler(help_handler)
 
     # Start the bot
     updater.start_polling()
