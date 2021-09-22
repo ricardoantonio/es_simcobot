@@ -133,3 +133,6 @@ commands/simcobot.db
 
 # Archivo de pruebas 
 test.py
+
+# PyCharm
+.idea/
