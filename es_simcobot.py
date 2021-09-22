@@ -43,7 +43,7 @@ def main():
     # Tareas programadas
     GROUP_ID = config('GROUPID')
     scheduler = BackgroundScheduler()
-    scheduler.add_job(get_simco_times, 'cron', args=[updater, GROUP_ID], day_of_week='wed', hour=21, minute=10,
+    scheduler.add_job(get_simco_times, 'cron', args=[updater, GROUP_ID], day_of_week='thu', hour=16, minute=0,
                       timezone='UTC')
     scheduler.start()
 
