@@ -1,11 +1,12 @@
 import logging
-from telegram.ext import Updater, CommandHandler
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from decouple import config
 from commands.addcompany import add_company
 from commands.delcompany import del_company
 from commands.ranking import ranking
 from commands.help import help
 from features.simcotimes import get_simco_times
+from features.newmembers import new_member
 from apscheduler.schedulers.background import BackgroundScheduler
 
 logging.basicConfig(
@@ -29,6 +30,7 @@ def main():
     del_company_handler = CommandHandler('eliminar', del_company)
     ranking_handler = CommandHandler('ranking', ranking)
     help_handler = CommandHandler('help', help)
+    new_member_handler = MessageHandler(Filters.status_update.new_chat_members, new_member)
 
     # 3. REGISTRAR MANEJADORES
     dispatcher.add_handler(ping_handler)
@@ -36,6 +38,7 @@ def main():
     dispatcher.add_handler(del_company_handler)
     dispatcher.add_handler(ranking_handler)
     dispatcher.add_handler(help_handler)
+    dispatcher.add_handler(new_member_handler)
 
     # Start the bot
     updater.start_polling()
@@ -43,7 +46,7 @@ def main():
     # Tareas programadas
     GROUP_ID = config('GROUPID')
     scheduler = BackgroundScheduler()
-    scheduler.add_job(get_simco_times, 'cron', args=[updater, GROUP_ID], day_of_week='thu', hour=16, minute=0,
+    scheduler.add_job(get_simco_times, 'cron', args=[updater, GROUP_ID], day_of_week='thu', hour=16, minute=2,
                       timezone='UTC')
     scheduler.start()
 
