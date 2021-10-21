@@ -1,5 +1,6 @@
 import sqlite3
 import os
+import logging
 
 from telegram import parsemode
 from telegram.constants import PARSEMODE_HTML, PARSEMODE_MARKDOWN_V2
@@ -12,6 +13,8 @@ def del_company(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id,
                                  text='Incluye junto al comando el nombre de la compañía que deseas eliminar de la lista', reply_to_message_id=update.message.message_id)
         return
+
+    logging.info("ELIMINAR COMPAÑIA: Solicitante: %s - Compañia: %s", update.message.from_user['first_name'], company_name)
 
     # Conexion a la DB
     dir_path = os.path.dirname(os.path.abspath(__file__))
@@ -38,5 +41,7 @@ def del_company(update, context):
         msg = 'Ocurrió un error al intentar eliminar a la empresa del ranking.'.format(
             company_name)
     conn.close()
+
+    logging.info("COMPAÑÍA ELIMINADA: %s", company_name)
     context.bot.send_message(chat_id=update.effective_chat.id, text=msg,
                              parse_mode=PARSEMODE_HTML, reply_to_message_id=update.message.message_id)

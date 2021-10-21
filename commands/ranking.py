@@ -1,3 +1,4 @@
+import logging
 import sqlite3
 import os
 
@@ -9,6 +10,7 @@ def ranking(update, context):
     dir_path = os.path.dirname(os.path.abspath(__file__))
     conn = sqlite3.connect(os.path.join(dir_path, 'simcobot.db'))
     cur = conn.cursor()
+    logging.info('SOLICITÓ RANKING: %s', update.message.from_user['first_name'])
     try:
         cur.execute(
             '''SELECT name, value, growth FROM companies ORDER BY value DESC''')

@@ -4,6 +4,7 @@ import urllib.error
 import json
 import ssl
 import os
+import logging
 
 from telegram import parsemode
 from telegram.constants import PARSEMODE_HTML, PARSEMODE_MARKDOWN_V2
@@ -16,6 +17,8 @@ def add_company(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id,
                                  text='Incluye junto al comando el nombre de la compañía que deseas añadir a la lista', reply_to_message_id=update.message.message_id)
         return
+
+    logging.info("AGREGAR COMPAÑIA: Solicitante: %s - Compañia: %s", update.message.from_user['first_name'], company_name)
 
     # Conexion a la DB
     dir_path = os.path.dirname(os.path.abspath(__file__))
@@ -33,7 +36,7 @@ def add_company(update, context):
     msg = 'Se ha añadido <b>{}</b> al ranking!'.format(company_name)
 
     url = service_url + company_name.replace(' ', '-') + '/'
-    print("recuperando datos de:", url)
+    logging.info("recuperando datos de: %s", url)
     try:
         uh = urlopen(url, context=ctx)
         datos = uh.read().decode()
@@ -55,5 +58,7 @@ def add_company(update, context):
                     (js['player']['id'], js['player']['company'], js['player']['logo'], js['player']['history']['value']))
         conn.commit()
     conn.close()
+
+    logging.info("COMPAÑÍA AGREGADA: %s", company_name)
     context.bot.send_message(chat_id=update.effective_chat.id, text=msg,
                              parse_mode=PARSEMODE_HTML, reply_to_message_id=update.message.message_id)
