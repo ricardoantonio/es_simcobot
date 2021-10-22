@@ -31,7 +31,7 @@ def main():
     add_company_handler = CommandHandler('agregar', add_company)
     del_company_handler = CommandHandler('eliminar', del_company)
     ranking_handler = CommandHandler('ranking', ranking)
-    help_handler = CommandHandler('help', help)
+    help_handler = CommandHandler('ayuda', help)
     reglas_handler = CommandHandler('reglas', rules)
     info_handler = CommandHandler('info', info)
     new_member_handler = MessageHandler(Filters.status_update.new_chat_members, new_member)
