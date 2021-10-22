@@ -5,6 +5,7 @@ from commands.addcompany import add_company
 from commands.delcompany import del_company
 from commands.ranking import ranking
 from commands.help import help
+from commands.rules import rules
 from features.simcotimes import get_simco_times
 from features.newmembers import new_member
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -30,6 +31,7 @@ def main():
     del_company_handler = CommandHandler('eliminar', del_company)
     ranking_handler = CommandHandler('ranking', ranking)
     help_handler = CommandHandler('help', help)
+    reglas_handler = CommandHandler('reglas', rules)
     new_member_handler = MessageHandler(Filters.status_update.new_chat_members, new_member)
 
     # 3. REGISTRAR MANEJADORES
@@ -38,6 +40,7 @@ def main():
     dispatcher.add_handler(del_company_handler)
     dispatcher.add_handler(ranking_handler)
     dispatcher.add_handler(help_handler)
+    dispatcher.add_handler(reglas_handler)
     dispatcher.add_handler(new_member_handler)
 
     # Start the bot
