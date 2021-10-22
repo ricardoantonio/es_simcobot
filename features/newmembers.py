@@ -9,8 +9,7 @@ def new_member(updater, context):
         print('MIEMBRO:', member)
         msg = f"👤 <b>{member.full_name}</b> se ha unido al grupo."
         if member['is_bot']:
-            msg += '\n️⚠️ Es probable que se trate de un bot.'
-        msg += '\n¿Alguien puede verificar?'
+            msg += '\n️⚠️ Es probable que se trate de un bot.\n¿Alguien puede verificar?'
 
     try:
         context.bot.send_message(chat_id=updater.effective_chat.id, text='¡Hola, {}! Bienvenid@ a <b><i>Sim Companies ES</i></b> 🇲🇽🇨🇱🇪🇸🇨🇴🇨🇺🇪🇨🇩🇴🇬🇶🇸🇻🇬🇹🇭🇳🇳🇮🇵🇦🇵🇾🇵🇪🇵🇷🇺🇾🇻🇪🇦🇷\n\n"Antes que nada por favor presentate con un nombre y el nombre de tu empresa, ya que unicamente miembros activos y reales pueden quedarse."\n\nDiviertanse Amig@s 😄 Recuerden Leer las /reglas y Para Más Información Pon /info'.format(member.full_name), parse_mode=PARSEMODE_HTML)
