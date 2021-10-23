@@ -6,6 +6,7 @@ import ssl
 import sqlite3
 import os
 import logging
+import time
 
 # Obtener la ruta absolute
 dir_path = os.path.dirname(os.path.abspath(__file__))
@@ -42,23 +43,26 @@ cur = conn.cursor()
 
 cur.execute('''SELECT idCompany FROM companies''')
 players = cur.fetchall()
+total_players = len(players)
 
-for player in players:
+for i, player in enumerate(players):
+
     url = service_url + str(player[0]) + '/'
-    logger.debug("recuperando datos de: %s", url)
+    logger.debug("%d de %d - %s", i + 1, total_players, url)
+
     try:
         uh = urllib.request.urlopen(url, context=ctx)
         datos = uh.read().decode()
     except urllib.error.HTTPError as err:
         if err.code == 404:
             datos = None
-            logger.warning("Error al recuperar: %s", url)
+            logger.warning("ERROR AL RECUPERAR: %s", url)
 
     try:
         js = json.loads(datos)
     except:
         js = None
-        logger.warning("No hay datos: %s", url)
+        logger.warning("NO HAY DATOS: %s", url)
 
     if js:
 
@@ -72,10 +76,13 @@ for player in players:
         else:
             growth = 100
         
-        logger.debug("Datos: %d %s %d %f", js['player']['id'], js['player']['company'], js['player']['history']['value'], growth)
 
         cur.execute('''UPDATE companies SET name = ?, value = ?, growth = ? WHERE idCompany = ?''',
                     (js['player']['company'], js['player']['history']['value'], growth, js['player']['id']))
         conn.commit()
+
+        logger.debug("Datos guardados: %d %s %d %f", js['player']['id'], js['player']['company'], js['player']['history']['value'], growth)
+    
+    time.sleep(1) # Esperamos un segundo antes de la siguiente llamada para no superar el límite de llamadas
 
 conn.close()
