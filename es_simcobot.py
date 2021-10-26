@@ -3,7 +3,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Callb
 from decouple import config
 from commands.addcompany import add_company
 from commands.delcompany import del_company
-from commands.ranking import ranking
+from commands.ranking import not_ranking
 from commands.help import help
 from commands.rules import rules
 from commands.info import info
@@ -30,7 +30,7 @@ def main():
     ping_handler = CommandHandler('ping', ping)
     add_company_handler = CommandHandler('agregar', add_company)
     del_company_handler = CommandHandler('eliminar', del_company)
-    ranking_handler = CommandHandler('ranking', ranking)
+    ranking_handler = CommandHandler('ranking', not_ranking)
     help_handler = CommandHandler('ayuda', help)
     reglas_handler = CommandHandler('reglas', rules)
     info_handler = CommandHandler('info', info)
