@@ -56,7 +56,7 @@ def main():
     scheduler.add_job(get_simco_times, 'cron', args=[updater, GROUP_ID], day_of_week='thu', hour=16, minute=2,
                       timezone='UTC')
     
-    scheduler.add_job(put_ranking, 'cron', args=[updater, GROUP_ID], hour=15, minute=55,
+    scheduler.add_job(put_ranking, 'cron', args=[updater, GROUP_ID], hour=2, minute=5,
                       timezone='UTC')
     scheduler.start()
 
