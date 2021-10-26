@@ -8,6 +8,7 @@ from commands.help import help
 from commands.rules import rules
 from commands.info import info
 from features.simcotimes import get_simco_times
+from features.ranking import put_ranking
 from features.newmembers import new_member
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -53,6 +54,9 @@ def main():
     GROUP_ID = config('GROUPID')
     scheduler = BackgroundScheduler()
     scheduler.add_job(get_simco_times, 'cron', args=[updater, GROUP_ID], day_of_week='thu', hour=16, minute=2,
+                      timezone='UTC')
+    
+    scheduler.add_job(put_ranking, 'cron', args=[updater, GROUP_ID], hour=15, minute=55,
                       timezone='UTC')
     scheduler.start()
 
