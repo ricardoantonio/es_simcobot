@@ -39,3 +39,8 @@ def ranking(update, context):
     conn.close()
     context.bot.send_message(
         chat_id=update.effective_chat.id, text=msg, parse_mode=PARSEMODE_HTML)
+
+def not_ranking(update, context):
+    msg = "ℹ️ <b>El ranking ahora está en los mensajes fijados.</b> Pronto este comando quedará deshabilitado."
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, text=msg, parse_mode=PARSEMODE_HTML)
