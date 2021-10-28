@@ -17,7 +17,7 @@ def put_ranking(update, chat_id):
         datos = cur.fetchall()
 
         msg = '🏆 <b>RANKING POR VALOR DE COMPAÑÍA</b> 🏆\n'
-        msg += datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S') + '\n\n'
+        msg += datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S') + ' UTC\n\n'
         msg += '<i>Para aparecer en el ranking usa el comando <pre>/agregar</pre> y el nombre de tu compañía tal como aprece en el juego.</i>\n\n'
 
         for i, company in enumerate(datos):
