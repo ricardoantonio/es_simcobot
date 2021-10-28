@@ -7,7 +7,7 @@ def new_member(updater, context):
 
     for member in updater.message.new_chat_members:
         print('MIEMBRO:', member)
-        msg = f"👤 <b>{member.full_name}</b> se ha unido al grupo."
+        msg = f"👤 <b>{member.full_name}</b> se ha unido al grupo {updater.effective_chat.title}."
         if member['is_bot']:
             msg += '\n️⚠️ Es probable que se trate de un bot.\n¿Alguien puede verificar?'
         else:
