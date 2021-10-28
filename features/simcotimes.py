@@ -57,6 +57,6 @@ def get_simco_times(updater, chat_id):
 
     conn = sqlite3.connect(os.path.join(dir_path, '../data/simcobot.db'))
     cur = conn.cursor()
-    #cur.execute('''UPDATE configurations SET value = ?''', (edition + 1,))
+    cur.execute('''UPDATE configurations SET value = ?''', (edition + 1,))
     conn.commit()
     conn.close()
