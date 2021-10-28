@@ -3,12 +3,12 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Callb
 from decouple import config
 from commands.addcompany import add_company
 from commands.delcompany import del_company
-from commands.ranking import not_ranking
+from commands.ranking import ranking
 from commands.help import help
 from commands.rules import rules
 from commands.info import info
 from features.simcotimes import get_simco_times
-from features.ranking import put_ranking
+from features.ranking import pin_ranking
 from features.newmembers import new_member
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -31,7 +31,7 @@ def main():
     ping_handler = CommandHandler('ping', ping)
     add_company_handler = CommandHandler('agregar', add_company)
     del_company_handler = CommandHandler('eliminar', del_company)
-    ranking_handler = CommandHandler('ranking', not_ranking)
+    ranking_handler = CommandHandler('ranking', ranking)
     help_handler = CommandHandler('ayuda', help)
     reglas_handler = CommandHandler('reglas', rules)
     info_handler = CommandHandler('info', info)
@@ -56,7 +56,7 @@ def main():
     scheduler.add_job(get_simco_times, 'cron', args=[updater, GROUP_ID], day_of_week='thu', hour=16, minute=2,
                       timezone='UTC')
     
-    scheduler.add_job(put_ranking, 'cron', args=[updater, GROUP_ID], hour=2, minute=5,
+    scheduler.add_job(pin_ranking, 'cron', args=[updater, GROUP_ID], hour=15, minute=29,
                       timezone='UTC')
     scheduler.start()
 

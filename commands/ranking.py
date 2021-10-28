@@ -1,46 +1,16 @@
 import logging
-import sqlite3
-import os
+from common_functions.ranking import get_ranking_msg
 
-from telegram import parsemode
 from telegram.constants import PARSEMODE_HTML, PARSEMODE_MARKDOWN_V2
 
 
 def ranking(update, context):
-    dir_path = os.path.dirname(os.path.abspath(__file__))
-    conn = sqlite3.connect(os.path.join(dir_path, 'simcobot.db'))
-    cur = conn.cursor()
-    logging.info('SOLICITÓ RANKING: %s', update.message.from_user['first_name'])
-    try:
-        cur.execute(
-            '''SELECT name, value, growth FROM companies ORDER BY value DESC''')
-        datos = cur.fetchall()
+    logging.info('SOLICITÓ RANKING: %s en %s', update.message.from_user['first_name'], update.message.chat.type)
 
-        msg = '🏆 <b>RANKING POR VALOR DE COMPAÑÍA</b> 🏆\n\n'
-        msg += '<i>Para aparecer en el ranking usa el comando <pre>/agregar</pre> y el nombre de tu compañía tal como aprece en el juego.</i>\n\n'
+    if update.message.chat.type == 'private':
+        msg = get_ranking_msg()
+    else:
+        msg = "ℹ️ <b>El ranking ahora está en los mensajes fijados.</b> Pronto este comando quedará deshabilitado."
 
-        for i, company in enumerate(datos):
-            if i == 0:
-                rank = '🥇'
-            elif i == 1:
-                rank = '🥈'
-            elif i == 2:
-                rank = '🥉'
-            else:
-                rank = str(i + 1) + '.'
-            msg += '<b>{} {}</b>\n      $ {:,.2f} ({:.2%})\n'.format(
-                rank, company[0], company[1], company[2] / 100)
-
-        msg += '\n<i>Para aparecer en el ranking usa el comando <pre>/agregar</pre> y el nombre de tu compañía tal como aprece en el juego.</i>'
-
-    except:
-        msg = 'Hubo un error al generar el Top, vuelve a intentarlo.'
-
-    conn.close()
-    context.bot.send_message(
-        chat_id=update.effective_chat.id, text=msg, parse_mode=PARSEMODE_HTML)
-
-def not_ranking(update, context):
-    msg = "ℹ️ <b>El ranking ahora está en los mensajes fijados.</b> Pronto este comando quedará deshabilitado."
     context.bot.send_message(
         chat_id=update.effective_chat.id, text=msg, parse_mode=PARSEMODE_HTML)

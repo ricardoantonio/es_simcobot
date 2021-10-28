@@ -1,41 +1,17 @@
 import logging
 import sqlite3
 import os
-import datetime
-
+from common_functions.ranking import get_ranking_msg
 from telegram.constants import PARSEMODE_HTML
 
 
-def put_ranking(update, chat_id):
+def pin_ranking(update, chat_id):
     dir_path = os.path.dirname(os.path.abspath(__file__))
     conn = sqlite3.connect(os.path.join(dir_path, '../commands/simcobot.db'))
     cur = conn.cursor()
-    logging.info('CALCULANDO RANKING')
-    try:
-        cur.execute(
-            '''SELECT name, value, growth FROM companies ORDER BY value DESC''')
-        datos = cur.fetchall()
+    logging.info('CALCULANDO RANKING DEL DÍA')
 
-        msg = '🏆 <b>RANKING POR VALOR DE COMPAÑÍA</b> 🏆\n'
-        msg += datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S') + ' UTC\n\n'
-        msg += '<i>Para aparecer en el ranking usa el comando <pre>/agregar</pre> y el nombre de tu compañía tal como aprece en el juego.</i>\n\n'
-
-        for i, company in enumerate(datos):
-            if i == 0:
-                rank = '🥇'
-            elif i == 1:
-                rank = '🥈'
-            elif i == 2:
-                rank = '🥉'
-            else:
-                rank = str(i + 1) + '.'
-            msg += '<b>{} {}</b>\n      $ {:,.2f} ({:.2%})\n'.format(
-                rank, company[0], company[1], company[2] / 100)
-
-        msg += '\n<i>Para aparecer en el ranking usa el comando <pre>/agregar</pre> y el nombre de tu compañía tal como aprece en el juego.</i>'
-
-    except:
-        msg = 'Hubo un error al generar el Top, vuelve a intentarlo.'
+    msg = get_ranking_msg()
 
     try:
         cur.execute('''SELECT value FROM configurations WHERE parameter="last_ranking_id"''')
