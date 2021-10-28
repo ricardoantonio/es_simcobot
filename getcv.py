@@ -38,7 +38,7 @@ ctx = ssl.create_default_context()
 ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
 
-conn = sqlite3.connect(os.path.join(dir_path, 'commands/simcobot.db'))
+conn = sqlite3.connect(os.path.join(dir_path, 'data/simcobot.db'))
 cur = conn.cursor()
 
 cur.execute('''SELECT idCompany FROM companies''')

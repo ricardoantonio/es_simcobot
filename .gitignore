@@ -136,3 +136,5 @@ test.py
 
 # PyCharm
 .idea/
+data/
+.DS_Store

@@ -18,7 +18,7 @@ def del_company(update, context):
 
     # Conexion a la DB
     dir_path = os.path.dirname(os.path.abspath(__file__))
-    conn = sqlite3.connect(os.path.join(dir_path, 'simcobot.db'))
+    conn = sqlite3.connect(os.path.join(dir_path, '../data/simcobot.db'))
     cur = conn.cursor()
     cur.execute('''SELECT name FROM companies WHERE name = ?''',
                 (company_name, ))

@@ -5,7 +5,7 @@ import datetime
 
 def get_ranking_msg():
     dir_path = os.path.dirname(os.path.abspath(__file__))
-    conn = sqlite3.connect(os.path.join(dir_path, '../commands/simcobot.db'))
+    conn = sqlite3.connect(os.path.join(dir_path, '../data/simcobot.db'))
     cur = conn.cursor()
     logging.info('CALCULANDO RANKING')
     try:
