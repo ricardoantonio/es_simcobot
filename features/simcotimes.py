@@ -49,7 +49,6 @@ def get_simco_times(updater, chat_id):
     msg = '<b>NUEVA EDICIÓN DE SIMCOMPANIES TIMES</b>\n\n'.format(edition)
     for i, article in enumerate(js['articles']):
         text = re.sub(CLEAN_HTML, '', article['copy1']).replace('\n', ' ')
-        print(text)
         msg += '<b>{}. {}</b>\n{}\n'.format(i+1, article['title'].replace('\n', ' '), text[:100]+'...')
     msg += '\n\nhttps://www.simcompanies.com/es/newspaper/{}'.format(edition)
 
