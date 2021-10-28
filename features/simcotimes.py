@@ -1,4 +1,5 @@
 import os
+import re
 import sqlite3
 from urllib.request import urlopen
 import urllib.error
@@ -7,6 +8,7 @@ import ssl
 from time import sleep
 from telegram.constants import PARSEMODE_HTML
 
+CLEAN_HTML = re.compile('<.*?>')
 
 def get_simco_times(updater, chat_id):
     print('Buscando SimCompanies Times')
@@ -46,13 +48,15 @@ def get_simco_times(updater, chat_id):
 
     msg = '<b>NUEVA EDICIÓN DE SIMCOMPANIES TIMES</b>\n\n'.format(edition)
     for i, article in enumerate(js['articles']):
-       msg += '<b>{}. {}</b>\n{}\n'.format(i+1, article['title'], article['copy1'][:100]+'...')
+        text = re.sub(CLEAN_HTML, '', article['copy1']).replace('\n', ' ')
+        print(text)
+        msg += '<b>{}. {}</b>\n{}\n'.format(i+1, article['title'].replace('\n', ' '), text[:100]+'...')
     msg += '\n\nhttps://www.simcompanies.com/es/newspaper/{}'.format(edition)
 
     updater.bot.sendMessage(chat_id=chat_id, text=msg, parse_mode=PARSEMODE_HTML)
 
-    conn = sqlite3.connect(os.path.join(dir_path, '../commands/simcobot.db'))
+    conn = sqlite3.connect(os.path.join(dir_path, '../data/simcobot.db'))
     cur = conn.cursor()
-    cur.execute('''UPDATE configurations SET value = ?''', (edition + 1,))
+    #cur.execute('''UPDATE configurations SET value = ?''', (edition + 1,))
     conn.commit()
     conn.close()
