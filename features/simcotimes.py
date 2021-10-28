@@ -12,7 +12,7 @@ def get_simco_times(updater, chat_id):
     print('Buscando SimCompanies Times')
 
     dir_path = os.path.dirname(os.path.abspath(__file__))
-    conn = sqlite3.connect(os.path.join(dir_path, '../commands/simcobot.db'))
+    conn = sqlite3.connect(os.path.join(dir_path, '../data/simcobot.db'))
     cur = conn.cursor()
     cur.execute('''SELECT value FROM configurations WHERE parameter="sctimes_edition"''')
     edition = cur.fetchone()[0]
