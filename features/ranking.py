@@ -7,7 +7,7 @@ from telegram.constants import PARSEMODE_HTML
 
 def pin_ranking(update, chat_id):
     dir_path = os.path.dirname(os.path.abspath(__file__))
-    conn = sqlite3.connect(os.path.join(dir_path, '../commands/simcobot.db'))
+    conn = sqlite3.connect(os.path.join(dir_path, '../data/simcobot.db'))
     cur = conn.cursor()
     logging.info('CALCULANDO RANKING DEL DÍA')
 
