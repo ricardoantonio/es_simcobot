@@ -8,6 +8,7 @@ def get_ranking_msg():
     conn = sqlite3.connect(os.path.join(dir_path, '../data/simcobot.db'))
     cur = conn.cursor()
     logging.info('CALCULANDO RANKING')
+    ranking_msg = []
     try:
         cur.execute(
             '''SELECT name, value, growth FROM companies ORDER BY value DESC''')
@@ -26,13 +27,17 @@ def get_ranking_msg():
                 rank = '🥉'
             else:
                 rank = str(i + 1) + '.'
-            msg += '<b>{} {}</b>\n      $ {:,d} ({:.2%})\n'.format(
+            msg += '<b>{} {}</b>\n      $ {:,.2f} ({:.2%})\n'.format(
                 rank, company[0], company[1], company[2] / 100)
+            if (i + 1) % 50 == 0:
+                ranking_msg.append(msg)
+                msg = ''
+        ranking_msg.append(msg)
 
     except:
-        msg = 'Hubo un error al generar el ranking, vuelve a intentarlo.'
+        ranking_msg[0] = 'Hubo un error al generar el ranking, vuelve a intentarlo.'
 
     conn.close()
 
-    return msg
+    return ranking_msg
     

@@ -11,7 +11,7 @@ def pin_ranking(update, chat_id):
     cur = conn.cursor()
     logging.info('CALCULANDO RANKING DEL DÍA')
 
-    msg = get_ranking_msg()
+    ranking_msg = get_ranking_msg()
 
     try:
         cur.execute('''SELECT value FROM configurations WHERE parameter="last_ranking_id"''')
@@ -20,8 +20,12 @@ def pin_ranking(update, chat_id):
     except:
         logging.info('No existe ranking fijado')
 
-    ranking_msg_sent = update.bot.send_message(
-        chat_id=chat_id, text=msg, parse_mode=PARSEMODE_HTML)
+    for i, msg in enumerate(ranking_msg):
+        if i == 0:
+            ranking_msg_sent = update.bot.send_message(
+                chat_id=chat_id, text=msg, parse_mode=PARSEMODE_HTML)
+        else:
+            update.bot.send_message(chat_id=chat_id, text=msg, parse_mode=PARSEMODE_HTML)
     update.bot.pinChatMessage(ranking_msg_sent['chat']['id'], ranking_msg_sent['message_id'])
     
     try:
