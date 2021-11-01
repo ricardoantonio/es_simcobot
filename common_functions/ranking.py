@@ -26,10 +26,8 @@ def get_ranking_msg():
                 rank = '🥉'
             else:
                 rank = str(i + 1) + '.'
-            msg += '<b>{} {}</b>\n      $ {:,.2f} ({:.2%})\n'.format(
+            msg += '<b>{} {}</b>\n      $ {:,d} ({:.2%})\n'.format(
                 rank, company[0], company[1], company[2] / 100)
-
-        msg += '\n<i>Para aparecer en el ranking usa el comando <pre>/agregar</pre> y el nombre de tu compañía tal como aprece en el juego.</i>'
 
     except:
         msg = 'Hubo un error al generar el ranking, vuelve a intentarlo.'
