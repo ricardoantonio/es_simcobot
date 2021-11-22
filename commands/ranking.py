@@ -12,7 +12,7 @@ def ranking(update, context):
     if update.message.chat.type == 'private':
         ranking_msg = get_ranking_msg()
     else:
-        msg = "ℹ️ <b>El ranking ahora está en los mensajes fijados.</b> Pronto este comando quedará deshabilitado."
+        msg = "ℹ️ <b>El ranking ahora está en los mensajes fijados.</b> Sólo puedes usar este comando en privado."
         ranking_msg.append(msg)
 
     for msg in ranking_msg:
