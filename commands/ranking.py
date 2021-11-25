@@ -16,4 +16,5 @@ def ranking(update, context):
         ranking_msg.append(msg)
 
     for msg in ranking_msg:
-        context.bot.send_message(chat_id=update.message.chat_id, text=msg, parse_mode=PARSEMODE_HTML)
+        if len(msg) > 0:
+            context.bot.send_message(chat_id=update.message.chat_id, text=msg, parse_mode=PARSEMODE_HTML)

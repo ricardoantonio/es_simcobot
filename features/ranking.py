@@ -25,7 +25,8 @@ def pin_ranking(update, chat_id):
             ranking_msg_sent = update.bot.send_message(
                 chat_id=chat_id, text=msg, parse_mode=PARSEMODE_HTML)
         else:
-            update.bot.send_message(chat_id=chat_id, text=msg, parse_mode=PARSEMODE_HTML)
+            if len(msg) > 0:
+                update.bot.send_message(chat_id=chat_id, text=msg, parse_mode=PARSEMODE_HTML)
     update.bot.pinChatMessage(ranking_msg_sent['chat']['id'], ranking_msg_sent['message_id'])
     
     try:
