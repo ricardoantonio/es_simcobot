@@ -50,7 +50,7 @@ def get_simco_times(updater, chat_id):
     for i, article in enumerate(js['articles']):
         text = re.sub(CLEAN_HTML, '', article['copy1']).replace('\n', ' ')
         msg += '<b>{}. {}</b>\n{}\n'.format(i+1, article['title'].replace('\n', ' '), text[:100]+'...')
-    msg += '\n\nhttps://www.simcompanies.com/es/newspaper/{}'.format(edition)
+    msg += '\n\nhttps://www.simcompanies.com/es/newspaper/{}/'.format(edition)
 
     updater.bot.sendMessage(chat_id=chat_id, text=msg, parse_mode=PARSEMODE_HTML)
 
