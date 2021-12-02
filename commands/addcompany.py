@@ -52,10 +52,14 @@ def add_company(update, context):
         js = None
 
     if js:
+        if js['player']['history']:
+            CompanyValue = js['player']['history']['value']
+        else:
+            CompanyValue = 0
         print(js['player']['id'], js['player']['company'],
-              js['player']['logo'], js['player']['history']['value'])
+              js['player']['logo'], CompanyValue)
         cur.execute('''INSERT OR REPLACE INTO companies(idCompany, name, logo, value) VALUES (?, ?, ?, ?)''',
-                    (js['player']['id'], js['player']['company'], js['player']['logo'], js['player']['history']['value']))
+                    (js['player']['id'], js['player']['company'], js['player']['logo'], CompanyValue))
         conn.commit()
     conn.close()
 
