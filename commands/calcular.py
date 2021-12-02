@@ -32,5 +32,5 @@ def calculate(data):
 
 def calcular(update, context):
     datos = ''.join(context.args)
-    context.bot.send_message(chat_id=update.effective_chat.id, text='{} = <b>{}</b>'.format(datos,calculate(get_data(datos))), reply_to_message_id=update.message.message_id, parse_mode=PARSEMODE_HTML)
+    context.bot.send_message(chat_id=update.effective_chat.id, text='{} = <b>{}</b>'.format(' '.join(get_data(datos)),calculate(get_data(datos))), reply_to_message_id=update.message.message_id, parse_mode=PARSEMODE_HTML)
     
