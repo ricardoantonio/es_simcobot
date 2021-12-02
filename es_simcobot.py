@@ -10,6 +10,7 @@ from commands.info import info
 from features.simcotimes import get_simco_times
 from features.ranking import pin_ranking
 from features.newmembers import new_member
+from commands.calcular import calcular
 from apscheduler.schedulers.background import BackgroundScheduler
 
 logging.basicConfig(
@@ -36,6 +37,7 @@ def main():
     reglas_handler = CommandHandler('reglas', rules)
     info_handler = CommandHandler('info', info)
     new_member_handler = MessageHandler(Filters.status_update.new_chat_members, new_member)
+    calcular_handler = CommandHandler('calcular', calcular)
 
     # 3. REGISTRAR MANEJADORES
     dispatcher.add_handler(ping_handler)
@@ -46,6 +48,7 @@ def main():
     dispatcher.add_handler(reglas_handler)
     dispatcher.add_handler(info_handler)
     dispatcher.add_handler(new_member_handler)
+    dispatcher.add_handler(calcular_handler)
 
     # Start the bot
     updater.start_polling()
