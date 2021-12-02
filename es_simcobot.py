@@ -54,10 +54,10 @@ def main():
     GROUP_ID = config('GROUPID')
     scheduler = BackgroundScheduler()
     scheduler.add_job(get_simco_times, 'cron', args=[updater, GROUP_ID], day_of_week='thu', hour=16, minute=2,
-                      timezone='UTC')
+                      timezone='UTC', misfire_grace_time=120)
     
     scheduler.add_job(pin_ranking, 'cron', args=[updater, GROUP_ID], hour=2, minute=5,
-                      timezone='UTC')
+                      timezone='UTC', misfire_grace_time=120)
     scheduler.start()
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
