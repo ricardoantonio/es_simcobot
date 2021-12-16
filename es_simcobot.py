@@ -7,6 +7,7 @@ from commands.ranking import ranking
 from commands.help import help
 from commands.rules import rules
 from commands.info import info
+from commands.algo import get_algo_price
 from features.simcotimes import get_simco_times
 from features.ranking import pin_ranking
 from features.newmembers import new_member
@@ -38,6 +39,7 @@ def main():
     info_handler = CommandHandler('info', info)
     new_member_handler = MessageHandler(Filters.status_update.new_chat_members, new_member)
     calcular_handler = CommandHandler('calcular', calcular)
+    algo_handler = CommandHandler('precioalgo', get_algo_price)
 
     # 3. REGISTRAR MANEJADORES
     dispatcher.add_handler(ping_handler)
@@ -49,6 +51,7 @@ def main():
     dispatcher.add_handler(info_handler)
     dispatcher.add_handler(new_member_handler)
     dispatcher.add_handler(calcular_handler)
+    dispatcher.add_handler(algo_handler)
 
     # Start the bot
     updater.start_polling()
