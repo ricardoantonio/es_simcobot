@@ -4,10 +4,10 @@ def info(update, context):
     msg = ('<b>Sim Companies Comunidad en Español</b>'
     '\nChat General:'
     '\nhttps://t.me/+7e9LQzWvos9hNWFh'
-    '\n\nCanal de Información:'
-    '\n@SimCompaniesEs'
     '\n\nChat de Ventas:'
     '\n@SCCEChatDeVentas'
+    '\n\nCanal de Información:'
+    '\n@SimCompaniesEs'
     '\n\nSimbloteca'
     '\n@Simbloteca')
     
