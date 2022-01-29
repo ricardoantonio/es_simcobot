@@ -2,7 +2,7 @@ from telegram.constants import PARSEMODE_HTML
 
 def info(update, context):
     msg = ('<b>Sim Companies Comunidad en Español</b>'
-    '\nChat General:'
+    '\n\nChat General:'
     '\nhttps://t.me/+7e9LQzWvos9hNWFh'
     '\n\nChat de Ventas:'
     '\n@SCCEChatDeVentas'
