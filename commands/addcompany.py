@@ -13,6 +13,7 @@ from telegram.constants import PARSEMODE_HTML, PARSEMODE_MARKDOWN_V2
 
 
 def add_company(update, context):
+    if update.message.chat.type != 'private': return
     company_name = ' '.join(context.args)
     if len(company_name) == 0:
         context.bot.send_message(chat_id=update.effective_chat.id,
