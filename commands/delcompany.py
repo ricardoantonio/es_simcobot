@@ -47,5 +47,5 @@ def del_company(update, context):
     logging.info("COMPAÑÍA ELIMINADA: %s", company_name)
     context.bot.send_message(chat_id=update.effective_chat.id, text=msg,
                              parse_mode=PARSEMODE_HTML, reply_to_message_id=update.message.message_id)
-    context.bot.send_message(chat_id=config('LOGCHATID'), text=msg,
+    context.bot.send_message(chat_id=config('LOGCHATID'), text='A petición de ' + update.message.from_user['first_name'] +' ' + msg,
                              parse_mode=PARSEMODE_HTML)
