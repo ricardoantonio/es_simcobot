@@ -1,3 +1,4 @@
+from ast import Return
 import sqlite3
 from urllib.request import urlopen
 import urllib.error
@@ -5,6 +6,7 @@ import json
 import ssl
 import os
 import logging
+from decouple import config
 
 from telegram import parsemode
 from telegram.constants import PARSEMODE_HTML, PARSEMODE_MARKDOWN_V2
@@ -12,7 +14,6 @@ from telegram.constants import PARSEMODE_HTML, PARSEMODE_MARKDOWN_V2
 
 def add_company(update, context):
     company_name = ' '.join(context.args)
-
     if len(company_name) == 0:
         context.bot.send_message(chat_id=update.effective_chat.id,
                                  text='Incluye junto al comando el nombre de la compañía que deseas añadir a la lista', reply_to_message_id=update.message.message_id)
@@ -65,4 +66,6 @@ def add_company(update, context):
 
     logging.info("COMPAÑÍA AGREGADA: %s", company_name)
     context.bot.send_message(chat_id=update.effective_chat.id, text=msg,
+                             parse_mode=PARSEMODE_HTML, reply_to_message_id=update.message.message_id)
+    context.bot.send_message(chat_id=config('LOGCHATID'), text=msg,
                              parse_mode=PARSEMODE_HTML, reply_to_message_id=update.message.message_id)
